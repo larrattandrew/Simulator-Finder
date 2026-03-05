@@ -1,0 +1,20 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html" charset="utf-8" />
+    <link href="/assets-global/css/old/cnatra.css" rel="stylesheet" type="text/css" />
+    <link href="/assets-global/css/old/boxPage.css" rel="stylesheet" type="text/css" />
+    <title>CNATRA : Website Error</title>
+<!--#include virtual="assets-global/includes/antiClickjack.htm" -->
+</head>
+<body>
+    <div id="container">
+        <img class="imgRight" src="/assets-global/img/logo-cnatra-135.png" width="135" height="135" alt="CNATRA patch" title="CNATRA patch" />
+        <p class="title">CNATRA<br/><span class="subtitle">Website Error</span></p>
+        <h2>We're sorry...</h2>
+        <p class="errText">To return to the CNATRA homepage or to report an issue to the Webmaster, please use the links below.</p>
+        <a href="/"><div class="preview-button">CNATRA Homepage</div></a>
+        <a href="/contact-us.asp"><div class="preview-button btn2">Contact Us</div></a>
+    </div>
+</body>
+</html>

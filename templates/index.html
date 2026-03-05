@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simulator Finder</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #1E90FF; }
+        pre { background: #f0f0f0; padding: 10px; border-radius: 5px; }
+        button { font-size: 16px; padding: 10px 20px; margin-bottom: 10px; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>🛩️ Simulator Finder</h1>
+    <form method="POST">
+        <button type="submit">Check Simulator Availability</button>
+    </form>
+    <pre>
+{% for line in schedule %}
+{% if "available" in line %}<span class="success">{{ line }}</span>{% elif "not available" in line %}<span class="error">{{ line }}</span>{% else %}{{ line }}{% endif %}
+{% endfor %}
+    </pre>
+</body>
+</html>
