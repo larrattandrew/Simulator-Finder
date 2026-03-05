@@ -3,23 +3,77 @@
 <head>
     <title>Simulator Finder</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
         h1 { color: #1E90FF; }
-        pre { background: #f0f0f0; padding: 10px; border-radius: 5px; }
-        button { font-size: 16px; padding: 10px 20px; margin-bottom: 10px; }
+        h2 { color: #555; font-weight: normal; margin-bottom: 20px; }
+        .date-header {
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto 20px auto;
+            text-align: left;
+        }
+        .simulator-card {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .simulator-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
         .success { color: green; }
         .error { color: red; }
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <h1>🛩️ Simulator Finder</h1>
+    <h2>Information displayed is solely based on the Web Schedule. Times displayed from 0430-2300.</h2>
+
     <form method="POST">
         <button type="submit">Check Simulator Availability</button>
     </form>
-    <pre>
-{% for line in schedule %}
-{% if "available" in line %}<span class="success">{{ line }}</span>{% elif "not available" in line %}<span class="error">{{ line }}</span>{% else %}{{ line }}{% endif %}
-{% endfor %}
-    </pre>
+
+    {% if schedule %}
+        {% for day in schedule %}
+            <div class="date-header">=== Simulator Availability for {{ day.date }} ===</div>
+
+            {% if day.no_events %}
+                <div class="error">No valid events available for this date.</div>
+            {% else %}
+                <div class="grid-container">
+                {% for sim in day.simulators %}
+                    <div class="simulator-card">
+                        <div class="simulator-name">{{ sim.name }}</div>
+                        {% if sim.error %}
+                            <div class="error">{{ sim.error }}</div>
+                        {% else %}
+                            {% for start, end in sim.times %}
+                                <div class="success">{{ start.strftime("%H:%M") }} - {{ end.strftime("%H:%M") }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 </body>
 </html>
