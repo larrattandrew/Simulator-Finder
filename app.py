@@ -3,6 +3,7 @@ from downloader import download_pdf
 from parser import extract_sim_events
 from scheduler import add_end_times, group_by_device, merge_intervals, find_gaps
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 SIM_OPEN = "0430"
 SIM_CLOSE = "2300"
@@ -13,16 +14,25 @@ SIM_ORDER = ["807", "808", "809", "810", "811", "812"]
 
 def generate_schedule_links():
     squadrons = ["VT-7", "VT-9"]
-    today = datetime.today()
+
+    central = ZoneInfo("America/Chicago")
+
+    today = datetime.now(central)
     tomorrow = today + timedelta(days=1)
-    dates = [today.strftime("%Y-%m-%d"), tomorrow.strftime("%Y-%m-%d")]
+
+    dates = [
+        today.strftime("%Y-%m-%d"),
+        tomorrow.strftime("%Y-%m-%d")
+    ]
 
     schedules = {}
+
     for date in dates:
         schedules[date] = []
         for sq in squadrons:
             url = f"https://www.cnatra.navy.mil/scheds/TW1/SQ-{sq}/!{date}!{sq}!Frontpage.pdf"
             schedules[date].append((sq, url))
+
     return schedules
 
 def fetch_schedule():
